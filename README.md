@@ -13,7 +13,7 @@ pip3 install numpy joblib click plotly prettytable smart_open autograd
 
 2. Create a [Plotly](https://plot.ly/python/) account and change your credentials in the file `animation_train.py:30`.
 
-3. Run our hyperbolic entailment cones on WordNet data or synthetic tree data (representing a uniform tree of some fixed branching factor and some fixed depth). These trees are in data/toy/ or data/maxn/. This code will produce an animation when embedding dimension is 2, and the animation will be opened in your browser at the end of the training. Our hyperbolic embeddings are first initialized with Poincare embeddings of [1] for a number of epochs, and then hyperbolic cones are trained on top of these embeddings. This code produces at the end the pictures from Figure 3 in our paper by running the following:
+3. Run our hyperbolic entailment cones on WordNet data or synthetic tree data (representing a uniform tree of some fixed branching factor and some fixed depth). These trees are in data/toy/ or data/maxn/. When embedding dimension is 2, this code will produce an animation of embeddings evolving during training (e.g. [this video](https://www.youtube.com/watch?v=qCVN-61VJXg)) and the animation will be opened in your default web browser at the end of the training. Our hyperbolic embeddings are first initialized with Poincare embeddings of [1] for a number of epochs, and then hyperbolic cones are trained on top of these embeddings. By running the following commands, at the end of the videos one can obtain the pictures from Figure 3 in our paper:
 ```
 python3 animation_train.py --tree='toy' --model='hyp_cones' --dim=2
 python3 animation_train.py --tree='toy' --model='poincare' --dim=2
