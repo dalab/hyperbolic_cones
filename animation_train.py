@@ -36,7 +36,7 @@ logger = setup_logger('main', also_stdout=True)
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--tree", type=str, help='toy | wordnet_full | wordnet_mammals ', default='toy')
+parser.add_argument("--tree", type=str, help='toy | wordnet_full | wordnet_mammals ', default='wordnet_mammals')
 parser.add_argument("--model", type=str, help='poincare | hyp_cones ', default='hyp_cones')
 parser.add_argument("--dim", type=int, default=2)
 
@@ -45,7 +45,7 @@ args = parser.parse_args()
 
 ######## Parameters:
 default_params = {
-    'model' : args.model, # poincare (M. Nickel's paper) or hyp_cones (initialized with Poincare)
+    'model' : args.model, # poincare or hyp_cones (initialized with Poincare)
     'tree_depth' : 6, # a number between 1 and 7
     'level_branch' : 4,  # a number between 3 and 4
     'remove_root': True,
@@ -148,7 +148,7 @@ def recover_tree_from_transitive_closure(relations):
 
 def read_tree_data():
     # Load the tree data:
-    transitive_relations = Relations(file_path=data_file_path)
+    transitive_relations = Relations(file_path=data_file_path, reverse=True)
     tree_relations = recover_tree_from_transitive_closure(transitive_relations)
 
     # Plot the embeddings
@@ -249,11 +249,11 @@ model = HypConesModel(transitive_relations,
                       # 0 for uniform, 1 for unigram, 0.75 for word2vec
                        margin=0.01,  # Margin for the loss.
                        opt=params['opt'],
-                      K=0.1,
-                      epsilon=1e-4,
-                      )
+                       K=0.1,
+                       epsilon=1e-4,
+                       )
 
-model.kv.syn0 = model._clip_vectors(vecs * 0.7)
+model.kv.syn0 = model._clip_vectors(vecs * 0.8)
 
 print('Finished initialization. Now training the hyperbolic cones..')
 

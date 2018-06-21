@@ -25,7 +25,7 @@ def eval_classification(
     Evaluates edge classification based on a scoring function.
     :param score_fn(alpha, parent_index, other_indices=None, rel_reversed):
         Function that scores each edge (u,v), v in other_nodes. The lower score means the higher the chance
-        the edge exists. One example of such function is the score(is-a(u,v)) from M. Nickel's paper.
+        the edge exists. One example of such function is the score(is-a(u,v)) from the Poincare embeddings" paper.
     """
     if valid_pos_path == test_pos_path:
         assert valid_neg_path == test_neg_path
@@ -78,7 +78,7 @@ class _EvalObj(object):
 
         self.pos_relations_parents = []
         self.pos_relations_children = []
-        rels = Relations(positive_rel_filepath)
+        rels = Relations(positive_rel_filepath, reverse=False)
         for node_parent, node_child in rels:
             assert node_parent != node_child
             node_parent_idx = vocab[node_parent].index
@@ -88,7 +88,7 @@ class _EvalObj(object):
 
         self.neg_relations_parents = []
         self.neg_relations_children = []
-        rels = Relations(negative_rel_filepath)
+        rels = Relations(negative_rel_filepath, reverse=False)
         for node_parent, node_child in rels:
             assert node_parent != node_child
             node_parent_idx = vocab[node_parent].index

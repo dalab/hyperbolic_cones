@@ -5,13 +5,15 @@ import csv
 class Relations(object):
     """Class to stream relations from a tsv-like file."""
 
-    def __init__(self, file_path, encoding='utf8', delimiter='\t'):
+    def __init__(self, file_path, reverse, encoding='utf8', delimiter='\t'):
         """Initialize instance from file containing a pair of nodes (a relation) per line.
 
         Parameters
         ----------
         file_path : str
             Path to file containing a pair of nodes (a relation) per line, separated by `delimiter`.
+        reverse: bool
+            Whether input csv file has edges (u,v) swapped or not.
         encoding : str, optional
             Character encoding of the input file.
         delimiter : str, optional
@@ -19,6 +21,7 @@ class Relations(object):
         """
 
         self.file_path = file_path
+        self.reverse = reverse
         self.encoding = encoding
         self.delimiter = delimiter
 
@@ -40,7 +43,10 @@ class Relations(object):
             for row in reader:
                 if sys.version_info[0] < 3:
                     row = [value.decode(self.encoding) for value in row]
-                (v,u) = tuple(row) # Swap line in the csv file because we want the correct edge direction.
+                (u,v) = tuple(row) # Swap line in the csv file because we want the correct edge direction.
                 assert u != v
-                yield (u,v)
+                if self.reverse:
+                    yield (v,u)
+                else:
+                    yield (u,v)
 

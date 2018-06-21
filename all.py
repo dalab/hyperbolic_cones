@@ -93,7 +93,7 @@ def train_eval_one_model(logger_name, model_name, new_params, output_file):
     logger.info('TASK: ' + params['task'])
     logger.info('\nTraining model: ' + model_name)
 
-    train_data = Relations(train_path)
+    train_data = Relations(train_path, reverse=False)
 
 ######################################################  INIT #####################################################################
     logger.info('================== START INIT ====================')
